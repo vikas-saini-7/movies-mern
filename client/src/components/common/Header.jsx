@@ -1,6 +1,7 @@
 import React from 'react'
 import { IconMenu, IconMoon } from '@tabler/icons-react'
 import { Link, NavLink } from 'react-router-dom'
+import MyModal from './MyModal'
 
 const Header = () => {
   return (
@@ -30,9 +31,10 @@ const Header = () => {
             {/* <li className='cursor-pointer'>
                 <IconMenu/>
             </li> */}
-            <div className='cursor-pointer button'>
+            {/* <div className='cursor-pointer button'>
                 Sign In
-            </div>
+            </div> */}
+            <MyModal/>
         </ul>
         </nav>
     </div>

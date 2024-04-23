@@ -35,6 +35,10 @@ body{
   background-color: $primary;
 }
 
+.bg-dark{
+  background-color: $dark;
+}
+
 // btn 
 .btn{
   padding: 4px 12px;
@@ -53,7 +57,9 @@ body{
   font-weight: bold;
   background-color: $primary;
 }
-
+.modal{
+  z-index: 2000 !important;
+}
 .header{
   position: fixed;
   z-index: 1000;
