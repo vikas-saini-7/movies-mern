@@ -1,5 +1,6 @@
 import React from 'react'
 import '../../styles/landing.scss'
+import {IconMenu} from "@tabler/icons-react"
 
 const LandingPage = () => {
   return (
@@ -11,11 +12,13 @@ const LandingPage = () => {
 
         <div className='header'>
           <div>
-            <h1 className='font-bold text-primary text-xl'>DarkFlix</h1>
+            <h1 className='font-bold text-primary text-2xl'>DarkFlix</h1>
           </div>
           <nav>
             <ul>
-              <li>Contact</li>
+              <li className='cursor-pointer' onClick={() => alert("Working on this feature")}>
+                <IconMenu/>
+              </li>
             </ul>
           </nav>
         </div>
@@ -28,7 +31,7 @@ const LandingPage = () => {
             <p className='text-white-secondary italic'>#LikeNeverBefore</p>
         </div>
         <div className='text-center'>
-          <button className='btn'>Explore Now</button>
+          <button className='btn' onClick={() => alert("Working on this feature")}>Explore Now</button>
         </div>
     </div>
   )
