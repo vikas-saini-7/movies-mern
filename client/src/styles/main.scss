@@ -53,3 +53,23 @@ body{
   font-weight: bold;
   background-color: $primary;
 }
+
+.header{
+  padding: 0 4%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.button{
+  background-color: $primary;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.button:hover{
+  background-color: rgb(181, 0, 0);
+}

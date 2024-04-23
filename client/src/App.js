@@ -4,7 +4,7 @@ import MainRouter from "./router/MainRouter";
 
 function App() {
 
-  const switchWeb = 0; //either 0 or any
+  const switchWeb = 1; //either 0 or any
 
   return (
     <div>
