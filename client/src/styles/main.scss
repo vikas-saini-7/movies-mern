@@ -55,12 +55,28 @@ body{
 }
 
 .header{
-  padding: 0 4%;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 0 2%;
+  // border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+.header li{
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+.header li:hover{
+  background-color: rgba(255, 0, 0, 0.1);
+}
+.header a.active{
+  border-radius: 4px;
+  background-color: $primary;
 }
 
 .button{
@@ -69,6 +85,9 @@ body{
   border-radius: 6px;
   font-weight: bold;
   transition: 0.3s;
+}
+.button-large{
+  padding: 12px 28px;
 }
 .button:hover{
   background-color: rgb(181, 0, 0);

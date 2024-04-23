@@ -7,9 +7,9 @@ const Header = () => {
     <div className='header'>
         <div className='flex items-center gap-6'>
             <h1 className='font-black text-primary text-3xl'>DarkFlix</h1>
-            <ul className='flex items-center gap-6 text-md font-semibold uppercase'>
+            <ul className='flex items-center gap-4 text-md font-semibold uppercase'>
                 <NavLink to='/'>
-                    <li>Home</li>
+                    <li className='active'>Home</li>
                 </NavLink>
                 <NavLink to='movies'>
                     <li>Movies</li>
@@ -20,7 +20,7 @@ const Header = () => {
                 <NavLink to='/search'>
                     <li>Search</li>
                 </NavLink>
-                <li>
+                <li className='cursor-pointer'>
                     <IconMoon size={22}/>
                 </li>
             </ul>
@@ -30,9 +30,9 @@ const Header = () => {
             {/* <li className='cursor-pointer'>
                 <IconMenu/>
             </li> */}
-            <li className='cursor-pointer button'>
+            <div className='cursor-pointer button'>
                 Sign In
-            </li>
+            </div>
         </ul>
         </nav>
     </div>
