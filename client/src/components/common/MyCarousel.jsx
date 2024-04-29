@@ -1,24 +1,28 @@
 import React from 'react'
 import CarouselSlide from './CarouselSlide'
 
-const Data = [
-    {
-        id: 1,
-        img: 'https://wallpapers.com/images/hd/your-name-background-nplwq35kp9p4gmne.jpg',
-        title: 'Title',
-        description: 'lorem ipsum gypsum',
-        rating: 7,
-        tags: ["tag 1", "tag 2"],
-    }
-]
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import { POP_HERO } from '../../constants';
 
 const MyCarousel = () => {
   return (
-    <div className=''>
-        {Data.map((item) => (
+    <Swiper
+      spaceBetween={0}
+      slidesPerView={1}
+      autoplay={{
+        delay: 3000,
+        disableOnInteraction: false,
+      }}
+      modules={[Autoplay]}
+    >
+        {POP_HERO.map((item)=>(
+          <SwiperSlide>
             <CarouselSlide key={item.id} slide={item} />
+          </SwiperSlide>
         ))}
-    </div>
+    </Swiper>
   )
 }
 
