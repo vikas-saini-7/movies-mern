@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { IconMenu, IconMoon } from '@tabler/icons-react'
 import { Link, NavLink } from 'react-router-dom'
 import MyModal from './MyModal'
 
 const Header = () => {
+
+    const [scrolled, setScrolled] = useState(false);
+  
+    useEffect(() => {
+      const handleScroll = () => {
+        const isScrolled = window.scrollY > 100; // Change 100 to your desired scroll position
+        setScrolled(isScrolled);
+      };
+  
+      window.addEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+    }, []);
+  
   return (
-    <div className='header'>
+    <div className={`header transition-all duration-500 ${scrolled ? 'backdrop-blur-md' : ''}`}>
         <div className='flex items-center gap-6'>
             <h1 className='font-black text-primary text-3xl'>DarkFlix</h1>
             <ul className='flex items-center gap-4 text-md font-semibold uppercase'>
@@ -28,12 +43,6 @@ const Header = () => {
         </div>
         <nav>
         <ul>
-            {/* <li className='cursor-pointer'>
-                <IconMenu/>
-            </li> */}
-            {/* <div className='cursor-pointer button'>
-                Sign In
-            </div> */}
             <MyModal/>
         </ul>
         </nav>
