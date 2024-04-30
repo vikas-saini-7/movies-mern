@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/css';
+import { Link } from 'react-router-dom';
 
 const baseUrl = 'https://image.tmdb.org/t/p/w500/';
 
@@ -30,10 +31,10 @@ const SectionSwiper = ({data}) => {
     >
       {data.map((item) => (
           <SwiperSlide key={item.id}>
-            <div className='h-[400px] lg:h-[480px] bg-cover' style={{backgroundImage:`url(${baseUrl}${item?.poster_path})`, backgroundOrigin:'center'}}>
-              {/* <p>{item.title}</p>
-              <p>{item.vote_count}</p> */}
-            </div>
+            <Link to={`/movie/${item.id}`}>
+              <div className='h-[400px] lg:h-[480px] bg-cover' style={{backgroundImage:`url(${baseUrl}${item?.poster_path})`, backgroundOrigin:'center'}}>
+              </div>
+            </Link>
           </SwiperSlide>
       ))}
     </Swiper>

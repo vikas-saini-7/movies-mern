@@ -12,13 +12,13 @@ const Header = () => {
         const isScrolled = window.scrollY > 100; // Change 100 to your desired scroll position
         setScrolled(isScrolled);
       };
-  
+      
       window.addEventListener('scroll', handleScroll);
       return () => {
         window.removeEventListener('scroll', handleScroll);
       };
     }, []);
-  
+    
   return (
     <div className={`header transition-all duration-500 ${scrolled ? 'backdrop-blur-md' : ''}`}>
         <div className='flex items-center gap-6'>
