@@ -1,7 +1,6 @@
 import LandingPage from "./pages/landing/LandingPage";
 import MainRouter from "./router/MainRouter";
 
-
 function App() {
 
   const switchWeb = 1; //either 0 or any

@@ -1,5 +1,6 @@
 import React from 'react'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import { Toaster } from 'react-hot-toast';
 import Header from '../components/common/Header'
 import HomePage from '../pages/home/HomePage'
 import MoviesPage from '../pages/movies/MoviesPage'
@@ -23,6 +24,7 @@ const MainRouter = () => {
         </Routes>
         <Footer/>
       </BrowserRouter>
+      <Toaster/>
     </div>
   )
 }

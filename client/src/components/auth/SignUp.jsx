@@ -1,7 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { toast } from 'react-hot-toast';
 import { Dialog } from '@headlessui/react'
+import { useDispatch } from 'react-redux'
+import { UserSignup } from '../../redux/actions/authActions';
 
 const SignUp = ({closeModal, toggleLoginActive}) => {
+    const dispatch = useDispatch();
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    function signupHandler() {
+        if(!name || !email || !password){
+            alert('fill all fields')
+        } else {
+            dispatch(UserSignup({name, email, password}))
+            .then(() => {
+              // Show success toast
+              toast.success('Signup successful!');
+            })
+            .catch((error) => {
+              // Show error toast
+              toast.error(`Error: ${error.message}`);
+            });
+            closeModal()
+        }
+    }
+    
   return (
     <div>
         <Dialog.Title
@@ -11,16 +37,16 @@ const SignUp = ({closeModal, toggleLoginActive}) => {
             Sign Up
         </Dialog.Title>
         <div className="mt-2">
-            <input className='bg-transparent border border-gray-700 rounded w-full px-4 py-2 mb-4' type="text" name="" id="" placeholder='Your Name' />
-            <input className='bg-transparent border border-gray-700 rounded w-full px-4 py-2 mb-4' type="text" name="" id="" placeholder='Username' />
-            <input className='bg-transparent border border-gray-700 rounded w-full px-4 py-2' type="password" name="" id="" placeholder='Password' />
+            <input onChange={(e) => setName(e.target.value)} className='bg-transparent border border-gray-700 rounded w-full px-4 py-2 mb-4' type="text" name="" id="" placeholder='Your Name' />
+            <input onChange={(e) => setEmail(e.target.value)} className='bg-transparent border border-gray-700 rounded w-full px-4 py-2 mb-4' type="text" name="" id="" placeholder='Username' />
+            <input onChange={(e) => setPassword(e.target.value)} className='bg-transparent border border-gray-700 rounded w-full px-4 py-2' type="password" name="" id="" placeholder='Password' />
         </div>
 
         <div className="mt-4">
             <button
             type="button"
             className='mt-4 button w-full uppercase'
-            onClick={closeModal}
+            onClick={signupHandler}
             >
             Sign Up
             </button>
