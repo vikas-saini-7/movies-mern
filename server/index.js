@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const jobRoutes = require('./routes/jobRoutes');
 const userRoutes = require('./routes/userRoutes');
 const cors = require('cors'); // Import CORS middleware
 const connectDB = require('./config/db');
@@ -21,11 +20,10 @@ app.use(bodyParser.json());
 connectDB();
 
 // routes
-app.use('/api', jobRoutes);
 app.use('/api/user', userRoutes);
 
 // Test route
-app.get('/api/test', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Server running!');
 });
 

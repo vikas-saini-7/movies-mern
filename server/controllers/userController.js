@@ -6,11 +6,11 @@ exports.signup = async (req, res) => {
         const { name, email, password } = req.body;
         const user = await User.findOne({ email });
         if(user){
-            res.status(500).json({ success: false, message: 'User with this email already exist' });
+            res.status(409).json({ message: 'User with this email already exist' });
         } else{
             const createdUser = await User.create({ name, email, password });
             const token = jwt.sign({ userId: createdUser._id }, process.env.JWT_SECRET);
-            res.json({ success: true, token, userDetails:{name, email } });
+            res.status(200).json({ token, userDetails: {name, email}});
         }
     } catch (error) {
         console.error('Error signing up:', error);
@@ -23,14 +23,14 @@ exports.login = async (req, res) => {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(401).json({ success: false, message: 'Authentication failed' });
+            return res.status(409).json({ success: false, message: 'Authentication failed' });
         }
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
-            return res.status(401).json({ success: false, message: 'Authentication failed' });
+            return res.status(409).json({ success: false, message: 'Authentication failed' });
         }
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
-        res.json({ success: true, token, userDetails:{name:user.name, email: user.email } });
+        res.status(200).json({ token, userDetails:{name: user.name, email: user.email } });
     } catch (error) {
         console.error('Error logging in:', error);
         res.json({ success: false, message: 'Server error' });
