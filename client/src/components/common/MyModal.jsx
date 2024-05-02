@@ -1,8 +1,15 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
+import SignUp from '../auth/SignUp';
+import Login from '../auth/Login';
 
 export default function MyModal() {
-  let [isOpen, setIsOpen] = useState(false)
+  let [isOpen, setIsOpen] = useState(false);
+  let [loginActive, setLoginActive] = useState(false);
+
+  function toggleLoginActive() {
+    setLoginActive(!loginActive)
+  }
 
   function closeModal() {
     setIsOpen(false)
@@ -46,32 +53,21 @@ export default function MyModal() {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-dark p-12 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-3xl mb-6 font-bold"
-                  >
-                    Log In
-                  </Dialog.Title>
-                  <div className="mt-2">
-                    <input className='bg-transparent border border-gray-700 rounded w-full px-4 py-2 mb-4' type="text" name="" id="" placeholder='Username' />
-                    <input className='bg-transparent border border-gray-700 rounded w-full px-4 py-2' type="password" name="" id="" placeholder='Username' />
-                  </div>
-
-                  <div className="mt-4">
-                    <button
-                      type="button"
-                      className='mt-4 button w-full uppercase'
-                      onClick={closeModal}
-                    >
-                      Log In
-                    </button>
-                    <button
-                      type="button"
-                      className='mt-4 py-2 w-full text-primary uppercase'
-                    >
-                      Sign Up
-                    </button>
-                  </div>
+                  {loginActive ?
+                  <>
+                    <Login
+                      closeModal={closeModal}
+                      toggleLoginActive={toggleLoginActive}
+                    />
+                  </>
+                  :
+                  <>
+                    <SignUp
+                      closeModal={closeModal}
+                      toggleLoginActive={toggleLoginActive}
+                    />
+                  </>
+                  }
                 </Dialog.Panel>
               </Transition.Child>
             </div>
