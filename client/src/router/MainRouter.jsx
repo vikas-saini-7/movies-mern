@@ -6,6 +6,7 @@ import MoviesPage from '../pages/movies/MoviesPage'
 import TvSeriesPage from '../pages/tv-series/TvSeriesPage'
 import SearchPage from '../pages/search/SearchPage'
 import MovieDetailsPage from '../pages/movies/MovieDetailsPage'
+import Footer from '../components/common/Footer'
 
 const MainRouter = () => {
   return (
@@ -20,6 +21,7 @@ const MainRouter = () => {
           <Route path='/search' element={<SearchPage/>}/>
           <Route path='*' element='not found'/>
         </Routes>
+        <Footer/>
       </BrowserRouter>
     </div>
   )
