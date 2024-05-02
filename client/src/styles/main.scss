@@ -73,11 +73,11 @@ body{
   align-items: center;
   justify-content: space-between;
 }
-.header li{
+.header li, .search-menu-item{
   padding: 6px 12px;
   border-radius: 4px;
 }
-.header li:hover{
+.header li:hover, .search-menu-item:hover{
   background-color: rgba(255, 0, 0, 0.1);
 }
 .header a.active{
