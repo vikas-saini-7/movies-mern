@@ -6,7 +6,7 @@ const Footer = () => {
     <div className='mt-24 bg-gray-500 py-12 px-4 lg:px-8 bg-opacity-10'>
         <div className='container mx-auto flex flex-col md:flex-row items-center justify-between'>
             <div>
-                <h1 className='font-black text-primary text-3xl'>DarkFlix</h1>
+                <h1 className='font-black text-primary text-3xl text-center md:text-left'>DarkFlix</h1>
                 <p>Browse Movies like never before</p>
             </div>
             <div>
