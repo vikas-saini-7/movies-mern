@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import UserDropdown from './UserDropdown'
 
 const Header = () => {
+    const loading = useSelector(state => state.auth.loading)
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
     const [scrolled, setScrolled] = useState(false);
   
@@ -22,7 +23,7 @@ const Header = () => {
     }, []);
     
   return (
-    <div className={`header transition-all duration-500 ${scrolled ? 'backdrop-blur-md' : ''}`}>
+    <div className={`relative header transition-all duration-500 ${scrolled ? 'backdrop-blur-md' : ''} `}>
         <div className='flex items-center gap-6'>
             <h1 className='font-black text-primary text-3xl'>DarkFlix</h1>
             <ul className='flex items-center gap-4 text-md font-semibold uppercase'>
@@ -44,14 +45,19 @@ const Header = () => {
             </ul>
         </div>
         <nav>
-        <ul>
-            {!isAuthenticated ?
-              <MyModal/>
-              :
-              <UserDropdown/>
-            }
-        </ul>
+          <ul>
+              {!isAuthenticated ?
+                <MyModal/>
+                :
+                <UserDropdown/>
+              }
+          </ul>
         </nav>
+        {loading &&
+        <div className='absolute bottom-0 left-0 bg-red-600 bg-opacity-10 -mb-1 w-full h-1 universalLoader'>
+          <span></span>
+        </div>
+        }
     </div>
   )
 }

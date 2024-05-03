@@ -42,7 +42,7 @@ export const loginUserWithToken = createAsyncThunk(
             Authorization: `Bearer ${token}`
           }
         });
-        return response.data;
+        return response.data.userDetails;
       } catch (error) {
         console.log(error);
         return thunkAPI.rejectWithValue(error.message); // Handle API errors gracefully

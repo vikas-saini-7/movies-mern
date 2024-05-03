@@ -1,16 +1,26 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { IconChevronDown, IconEdit, IconEditCircle, IconLogout, IconSettings } from '@tabler/icons-react'
+import { useDispatch, useSelector } from 'react-redux'
+import { IconChevronDown, IconEdit, IconEditCircle, IconLogout, IconSettings, IconUserCircle } from '@tabler/icons-react'
 import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useRef, useState } from 'react'
+import { logOutUser } from '../../redux/reducres/authReducer'
+import toast from 'react-hot-toast'
 
 const UserDropdown = () => {
-    const user = useSelector(state => state.auth.user)
+    const user = useSelector(state => state.auth.user);
+    const dispatch = useDispatch()
+
+    function logOutHandler(){
+      dispatch(logOutUser())
+      toast.success("Logged Out Successfully")
+    }
+
   return (
     <Menu as="div" className="relative inline-block text-left">
         <div>
           <Menu.Button className="inline-flex items-center w-full justify-center rounded-md bg-black/20 px-4 py-2 font-medium text-white hover:bg-black/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75">
-            <p>{user.userDetails.name}</p>
+            <IconUserCircle className='mr-2'/>
+            <p>{user?.name}</p>
             <IconChevronDown
               className="-mr-1 ml-2 h-5 w-5 text-violet-200 hover:text-violet-100"
               aria-hidden="true"
@@ -71,6 +81,7 @@ const UserDropdown = () => {
               <Menu.Item>
                 {({ active }) => (
                   <button
+                  onClick={logOutHandler}
                     className={`${
                       active ? 'bg-primary text-white' : 'text-gray-900'
                     } group flex w-full items-center rounded-md px-2 py-2`}
