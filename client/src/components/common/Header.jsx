@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { IconMenu, IconMoon } from '@tabler/icons-react'
 import { Link, NavLink } from 'react-router-dom'
 import MyModal from './MyModal'
+import { useSelector } from 'react-redux'
+import UserDropdown from './UserDropdown'
 
 const Header = () => {
-
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
     const [scrolled, setScrolled] = useState(false);
   
     useEffect(() => {
@@ -43,7 +45,11 @@ const Header = () => {
         </div>
         <nav>
         <ul>
-            <MyModal/>
+            {!isAuthenticated ?
+              <MyModal/>
+              :
+              <UserDropdown/>
+            }
         </ul>
         </nav>
     </div>

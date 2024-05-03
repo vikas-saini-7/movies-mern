@@ -14,7 +14,7 @@ exports.signup = async (req, res) => {
         }
     } catch (error) {
         console.error('Error signing up:', error);
-        res.status(500).json({ success: false, message: 'Server error' });
+        res.status(500).json({ message: 'Error Signing In' });
     }
 };
 
@@ -23,17 +23,17 @@ exports.login = async (req, res) => {
         const { email, password } = req.body;
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(409).json({ success: false, message: 'Authentication failed' });
+            return res.status(409).json({ message: 'Authentication failed' });
         }
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
-            return res.status(409).json({ success: false, message: 'Authentication failed' });
+            return res.status(409).json({ message: 'Authentication failed' });
         }
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
         res.status(200).json({ token, userDetails:{name: user.name, email: user.email } });
     } catch (error) {
         console.error('Error logging in:', error);
-        res.json({ success: false, message: 'Server error' });
+        res.json({ message: 'Error logging In' });
     }
 };
 
@@ -41,10 +41,12 @@ exports.validateToken = async (req, res) => {
     try {
         const user = req.user;
         if(user){
-            res.status(201).json({success: true, userDetails:{name:user.name, email: user.email } })
+            res.status(200).json({userDetails:{name:user.name, email: user.email } })
+        } else {
+            res.status(409).json({message: "Token Not validated"})
         }
     } catch (error) {
-        console.error('Error fetching jobs by user:', error);
-        res.status(500).json({ success: false, message: 'Server error' });
+        console.error('Error validating token:', error);
+        res.status(500).json({ message: 'Error validating token' });
     }
 }
