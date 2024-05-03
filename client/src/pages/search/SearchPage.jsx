@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { POP_MOVIES } from '../../constants';
 import { Link } from 'react-router-dom';
 import { IconPlayerPlayFilled } from '@tabler/icons-react';
