@@ -8,8 +8,11 @@ import TvSeriesPage from '../pages/tv-series/TvSeriesPage'
 import SearchPage from '../pages/search/SearchPage'
 import MovieDetailsPage from '../pages/movies/MovieDetailsPage'
 import Footer from '../components/common/Footer'
+import { useSelector } from 'react-redux';
+import SettingsPage from '../pages/settings/SettingsPage';
 
 const MainRouter = () => {
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
   return (
     <div>
       <BrowserRouter>
@@ -21,6 +24,9 @@ const MainRouter = () => {
           <Route path='/tv-series' element={<TvSeriesPage/>}/>
           <Route path='/search' element={<SearchPage/>}/>
           <Route path='*' element='not found'/>
+          {isAuthenticated &&
+            <Route path='/settings' element={<SettingsPage/>}/>
+          }
         </Routes>
         <Footer/>
       </BrowserRouter>

@@ -5,14 +5,17 @@ import { Menu, Transition } from '@headlessui/react'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import { logOutUser } from '../../redux/reducres/authReducer'
 import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 const UserDropdown = () => {
     const user = useSelector(state => state.auth.user);
     const dispatch = useDispatch()
+    const navigate = useNavigate();
 
     function logOutHandler(){
       dispatch(logOutUser())
-      toast.success("Logged Out Successfully")
+      toast.success("Logged Out Successfully");
+      navigate("/");
     }
 
   return (
