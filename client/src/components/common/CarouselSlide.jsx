@@ -1,6 +1,8 @@
 import React from 'react'
 import CircularProgress from './CircularProgress';
 import { IconPlayerPlay } from '@tabler/icons-react';
+import { CircularProgressbar,buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 const baseUrl = 'https://image.tmdb.org/t/p/original';
 
@@ -22,12 +24,19 @@ const CarouselSlide = ({slide}) => {
       <div className='relative pt-28 lg:pt-44 px-[10%] min-h-[450px] lg:min-h-[700px]'>
         <div className='flex flex-col gap-8 max-w-[480px]'>
           <h1 className='text-5xl lg:text-7xl font-bold'>{title}</h1>
-          <div className='flex items-center'>
-            <p className='w-12 h-12 flex items-center justify-center mr-2 text-lg font-bold'>{vote_average}</p>
-            {/* <CircularProgress value={4} /> */}
-            {/* {tags.map((item) => (
-              <p className='bg-primary rounded-full px-5 py-2 text-sm'>{item}</p>
-            ))} */}
+          <div className='flex items-center w-[70px]'>
+            <CircularProgressbar
+            value={vote_average.toFixed(1)*10}
+            text={`${vote_average.toFixed(1)}`}
+            styles={buildStyles({
+              strokeLinecap: 'butt',
+              textSize: '22px',
+              // Colors
+              pathColor: `#00d977`,
+              textColor: 'white',
+              trailColor: 'transparent',
+            })}
+            />
           </div>
           <p className='text-lg'>{truncatedDescription}</p>
           <button className='button button-large w-fit flex items-center gap-2'> <IconPlayerPlay/> Watch Now</button>

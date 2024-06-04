@@ -5,7 +5,7 @@ import Login from '../auth/Login';
 
 export default function MyModal() {
   let [isOpen, setIsOpen] = useState(false);
-  let [loginActive, setLoginActive] = useState(false);
+  let [loginActive, setLoginActive] = useState(true);
 
   function toggleLoginActive() {
     setLoginActive(!loginActive)

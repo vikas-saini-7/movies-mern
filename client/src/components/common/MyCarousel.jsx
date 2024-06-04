@@ -4,9 +4,8 @@ import CarouselSlide from './CarouselSlide'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
-import { POP_HERO } from '../../constants';
 
-const MyCarousel = () => {
+const MyCarousel = ({data}) => {
   return (
     <Swiper
       spaceBetween={0}
@@ -17,7 +16,7 @@ const MyCarousel = () => {
       }}
       modules={[Autoplay]}
     >
-        {POP_HERO.map((item)=>(
+        {data.map((item)=>(
           <SwiperSlide>
             <CarouselSlide key={item.id} slide={item} />
           </SwiperSlide>

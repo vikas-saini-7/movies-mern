@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { IconMenu, IconMoon } from '@tabler/icons-react'
+import { IconMenu, IconMenu2, IconMoon } from '@tabler/icons-react'
 import { Link, NavLink } from 'react-router-dom'
 import MyModal from './MyModal'
 import { useSelector } from 'react-redux'
 import UserDropdown from './UserDropdown'
+import Drawer from 'react-modern-drawer'
+import 'react-modern-drawer/dist/index.css'
+import PhoneMenu from './PhoneMenu'
+
 
 const Header = () => {
+    const [isOpen, setIsOpen] = React.useState(false)
     const loading = useSelector(state => state.auth.loading)
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
     const [scrolled, setScrolled] = useState(false);
@@ -21,12 +26,29 @@ const Header = () => {
         window.removeEventListener('scroll', handleScroll);
       };
     }, []);
+
+    const toggleDrawer = () => {
+      setIsOpen((prevState) => !prevState)
+    }
     
   return (
     <div className={`relative header transition-all duration-500 ${scrolled ? 'backdrop-blur-md' : ''} `}>
-        <div className='flex items-center gap-6'>
+        <div className='flex items-center gap-3'>
+            {/* trigger drawer  */}
+            <button onClick={toggleDrawer} className='md:hidden pl-4'>
+              <IconMenu2/>
+            </button>
+            {/* drawer  */}
+            <Drawer
+                open={isOpen}
+                onClose={toggleDrawer}
+                direction='left'
+                className=''
+            >
+              <PhoneMenu/>
+            </Drawer>
             <h1 className='font-black text-primary text-3xl'>DarkFlix</h1>
-            <ul className='flex items-center gap-4 text-md font-semibold uppercase'>
+            <ul className='items-center gap-4 text-md font-semibold uppercase hidden md:flex'>
                 <NavLink to='/'>
                     <li className='active'>Home</li>
                 </NavLink>

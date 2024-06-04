@@ -10,6 +10,8 @@ import MovieDetailsPage from '../pages/movies/MovieDetailsPage'
 import Footer from '../components/common/Footer'
 import { useSelector } from 'react-redux';
 import SettingsPage from '../pages/settings/SettingsPage';
+import ProfilePage from '../pages/profile/ProfilePage';
+import ReviewsPage from '../pages/reviews/ReviewsPage';
 
 const MainRouter = () => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
@@ -25,7 +27,11 @@ const MainRouter = () => {
           <Route path='/search' element={<SearchPage/>}/>
           <Route path='*' element='not found'/>
           {isAuthenticated &&
-            <Route path='/settings' element={<SettingsPage/>}/>
+            <>
+              <Route path='/profile' element={<ProfilePage/>}/>
+              <Route path='/reviews' element={<ReviewsPage/>}/>
+              <Route path='/settings' element={<SettingsPage/>}/>
+            </>
           }
         </Routes>
         <Footer/>

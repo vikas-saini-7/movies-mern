@@ -48,9 +48,10 @@ const Login = ({closeModal, toggleLoginActive}) => {
             >
             Log In
             </button>
+            <p className='text-gray-500 mt-6 text-center'>Don't have an account?</p>
             <button
             type="button"
-            className='mt-4 py-2 w-full text-primary uppercase'
+            className='w-full text-primary uppercase'
             onClick={toggleLoginActive}
             >
             Sign Up

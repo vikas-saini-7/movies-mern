@@ -50,9 +50,10 @@ const SignUp = ({closeModal, toggleLoginActive}) => {
             >
             Sign Up
             </button>
+            <p className='text-gray-500 mt-6 text-center'>Already have an account?</p>
             <button
             type="button"
-            className='mt-4 py-2 w-full text-primary uppercase'
+            className='w-full text-primary uppercase'
             onClick={toggleLoginActive}
             >
             Log In
