@@ -1,10 +1,19 @@
+import { useDispatch } from "react-redux";
 import LandingPage from "./pages/landing/LandingPage";
 import MainRouter from "./router/MainRouter";
-
+import { useEffect } from "react";
+import { loginUserWithToken } from "./redux/actions/authActions";
 
 function App() {
 
-  const switchWeb = 0; //either 0 or any
+  const dispatch = useDispatch();
+
+  useEffect(()=> {
+    let token = localStorage.getItem('token');
+    dispatch(loginUserWithToken(token))
+  }, [])
+
+  const switchWeb = 1; //either 0 or any
 
   return (
     <div>

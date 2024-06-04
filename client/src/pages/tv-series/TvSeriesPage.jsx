@@ -1,13 +1,13 @@
 import React from 'react'
 import MyCarousel from '../../components/common/MyCarousel'
 import SectionTitle from '../../components/common/SectionTitle'
-import { POP_HERO_2, POP_MOVIES } from '../../constants'
 import SectionSwiper from '../../components/common/SectionSwiper'
+import { POP_MOVIES, POP_HERO_2 } from '../../constants'
 
-const HomePage = () => {
+const TvSeriesPage = () => {
   return (
     <div>
-      <MyCarousel data={POP_HERO_2}/>
+      <MyCarousel data={POP_HERO_2} />
       <main className='container mx-auto px-4'>
         <section>
           <SectionTitle title="Popular Movies" />
@@ -30,4 +30,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default TvSeriesPage
