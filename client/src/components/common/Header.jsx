@@ -49,7 +49,7 @@ const Header = () => {
               <PhoneMenu/>
             </Drawer>
             <h1 className='font-black text-primary text-3xl'>DarkFlix</h1>
-            <ul className='items-center gap-4 text-md font-semibold uppercase hidden md:flex'>
+            <ul className='items-center gap-4 ml-2 text-md font-semibold uppercase hidden md:flex'>
                 {/* <NavLink to='/'>
                     <li className='active'>Home</li>
                 </NavLink> */}
