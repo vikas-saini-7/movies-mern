@@ -4,7 +4,7 @@ exports.getComments = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const comments = await Comment.find({ user: userId });
+    const comments = await Comment.find({ user: userId }).populate('user');
 
     res.status(200).json({
       status: "success",
@@ -21,7 +21,6 @@ exports.getComments = async (req, res) => {
 exports.getCommentsMovie = async (req, res) => {
   try {
     const { itemId } = req.params;
-    console.log(itemId);
 
     const comments = await Comment.find({ itemId, itemType: "movie" }).populate(
       "user"
