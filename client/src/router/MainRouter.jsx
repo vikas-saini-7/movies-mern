@@ -23,7 +23,7 @@ const MainRouter = () => {
         <Routes>
           <Route exact path='/' element={<HomePage/>}/>
           <Route path='/movies' element={<MoviesPage/>}/>
-          <Route path='/movie/:id' element={<MovieDetailsPage/>}/>
+          <Route path='/movies/:id' element={<MovieDetailsPage/>}/>
           <Route path='/tv-series' element={<TvSeriesPage/>}/>
           <Route path='/tv-series/:id' element={<TvSeriesDetailsPage/>}/>
           <Route path='/search' element={<SearchPage/>}/>

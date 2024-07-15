@@ -47,7 +47,7 @@ const SectionSwiper = ({ data, usedFor }) => {
               </div>
               <div className="flex transition-all duration-300 absolute top-0 left-0 opacity-0 group-hover:opacity-100 flex-col text-center items-center justify-center w-full h-full">
                 <Link
-                  to={`/${usedFor === "series" ? "tv-series" : "movie"}/${
+                  to={`/${usedFor === "series" ? "tv-series" : "movies"}/${
                     item.id
                   }`}
                 >

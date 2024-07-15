@@ -48,7 +48,7 @@ const CarouselSlide = ({ slide, usedFor }) => {
             />
           </div>
           <p className="text-lg">{truncatedDescription}</p>
-          <Link to={`/${usedFor === 'series' ? 'tv-series' : 'movie'}/${id}`}>
+          <Link to={`/${usedFor === 'series' ? 'tv-series' : 'movies'}/${id}`}>
             <button className="button button-large w-fit flex items-center gap-2">
               <IconPlayerPlay />
               Watch Now
