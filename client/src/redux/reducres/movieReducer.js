@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Search } from "../actions/searchActions";
+import { getAllMovies, getPopularMovies, getTopRatedMovies, getUpcomingMovies } from "../actions/movieActions";
 
 const initialState = {
-    movies: [],
+    all: [],
+    popular: [],
+    topRated: [],
+    upcoming: [],
     loading: false,
     error: null
 }
@@ -14,16 +17,53 @@ const movieSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-        .addCase(Search.pending, (state, action) => {
+
+        // all movies 
+        .addCase(getAllMovies.pending, (state, action) => {
             state.loading = true;
         })
-        .addCase(Search.pending, (state, action) => {
+        .addCase(getAllMovies.fulfilled, (state, action) => {
             state.loading = false;
-            state.movies = action.payload
+            state.all = action.payload
         })
-        .addCase(Search.pending, (state, action) => {
+        .addCase(getAllMovies.rejected, (state, action) => {
+            state.loading = false;
+        })
+
+        // popular movies 
+        .addCase(getPopularMovies.pending, (state, action) => {
             state.loading = true;
-            state.error = action.payload ? action.error : "Unknown error";
+        })
+        .addCase(getPopularMovies.fulfilled, (state, action) => {
+            state.loading = false;
+            state.popular = action.payload
+        })
+        .addCase(getPopularMovies.rejected, (state, action) => {
+            state.loading = false;
+        })
+
+        // top_rated movies 
+        .addCase(getTopRatedMovies.pending, (state, action) => {
+            state.loading = true;
+        })
+        .addCase(getTopRatedMovies.fulfilled, (state, action) => {
+            state.loading = false;
+            state.topRated = action.payload
+        })
+        .addCase(getTopRatedMovies.rejected, (state, action) => {
+            state.loading = false;
+        })
+
+        // upcoming movies 
+        .addCase(getUpcomingMovies.pending, (state, action) => {
+            state.loading = true;
+        })
+        .addCase(getUpcomingMovies.fulfilled, (state, action) => {
+            state.loading = false;
+            state.upcoming = action.payload
+        })
+        .addCase(getUpcomingMovies.rejected, (state, action) => {
+            state.loading = false;
         })
     }
 })
