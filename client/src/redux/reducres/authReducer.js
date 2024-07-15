@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { UserLogin, UserSignup, loginUserWithToken } from "../actions/authActions";
+import toast from "react-hot-toast";
 
 const initialState = {
     user: {},
@@ -16,6 +17,7 @@ const authSlice = createSlice({
             localStorage.removeItem('token');
             state.user = {};
             state.isAuthenticated = false
+            toast.success('Logged Out successfully');
         }
     },
     extraReducers: (builder) => {
@@ -29,10 +31,12 @@ const authSlice = createSlice({
             state.loading = false;
             state.isAuthenticated = true;
             state.user = action.payload;
+            toast.success('Sign up successful');
         })
         .addCase(UserSignup.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload ? action.payload : "Unknown error";
+            toast.error('Sign up failed', action.payload ? action.payload : "Unknown error");
         })
 
         // login 
@@ -43,10 +47,12 @@ const authSlice = createSlice({
             state.loading = false;
             state.isAuthenticated = true;
             state.user = action.payload;
+            toast.success('Logged In successfully');
         })
         .addCase(UserLogin.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload ? action.payload : "Unknown error";
+            toast.error('Logging In failed', action.payload);
         })
 
         // login 
@@ -57,10 +63,13 @@ const authSlice = createSlice({
             state.loading = false;
             state.isAuthenticated = true;
             state.user = action.payload;
+            toast.success('Logged In successfully');
         })
         .addCase(loginUserWithToken.rejected, (state, action) => {
             state.loading = false;
             state.error = action.payload ? action.payload : "Unknown error";
+            toast.error('Logging In failed', action.payload ? action.payload : "Unknown error");
+            localStorage.removeItem('token');
         })
     }
 })
