@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
 
-const MyCarousel = ({data}) => {
+const MyCarousel = ({data, usedFor}) => {
   return (
     <Swiper
       spaceBetween={0}
@@ -18,7 +18,7 @@ const MyCarousel = ({data}) => {
     >
         {data.map((item)=>(
           <SwiperSlide>
-            <CarouselSlide key={item.id} slide={item} />
+            <CarouselSlide usedFor={usedFor} key={item.id} slide={item} />
           </SwiperSlide>
         ))}
     </Swiper>

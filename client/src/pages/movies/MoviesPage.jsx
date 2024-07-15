@@ -25,7 +25,7 @@ const MoviesPage = () => {
 
   return (
     <div>
-      <MyCarousel data={popular}/>
+      <MyCarousel usedFor='movie' data={popular}/>
       <main className='container mx-auto px-4'>
         <section>
           <SectionTitle title="Popular Series" />

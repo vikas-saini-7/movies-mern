@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import SettingsPage from '../pages/settings/SettingsPage';
 import ProfilePage from '../pages/profile/ProfilePage';
 import ReviewsPage from '../pages/reviews/ReviewsPage';
+import TvSeriesDetailsPage from '../pages/tv-series/TvSeriesDetailsPage';
 
 const MainRouter = () => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
@@ -24,6 +25,7 @@ const MainRouter = () => {
           <Route path='/movies' element={<MoviesPage/>}/>
           <Route path='/movie/:id' element={<MovieDetailsPage/>}/>
           <Route path='/tv-series' element={<TvSeriesPage/>}/>
+          <Route path='/tv-series/:id' element={<TvSeriesDetailsPage/>}/>
           <Route path='/search' element={<SearchPage/>}/>
           <Route path='*' element='not found'/>
           {isAuthenticated &&
