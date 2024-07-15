@@ -5,32 +5,55 @@ import SectionTitle from "../../components/common/SectionTitle";
 import SectionSwiper from "../../components/common/SectionSwiper";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const baseUrl = "https://image.tmdb.org/t/p/original";
 
 const MovieDetailsPage = () => {
   const { id } = useParams();
   const [movie, setMovie] = useState();
+  const [reviews, setReviews] = useState();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchMovie = async () => {
-      try {
-        const API_KEY = "03b6ee421e966831a5e3d3ff0d65eede";
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`
-        );
-        console.log(response.data);
-        setMovie(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      }
-    };
+  const fetchMovie = async () => {
+    try {
+      const API_KEY = "03b6ee421e966831a5e3d3ff0d65eede";
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`
+      );
+      console.log(response.data);
+      setMovie(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setLoading(false);
+    }
+  };
 
+  const fetchReviews = async () => {
+    if (!id) {
+      console.error("User ID is undefined");
+      return;
+    }
+    try {
+      const response = await axios.get(
+        `http://localhost:9000/api/comment/movie/${id}`
+      );
+      console.log("Comments: ", response.data.results);
+      setReviews(response.data.results);
+      // setLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      // setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchMovie();
-  }, []);
+    if (id) {
+      fetchReviews();
+    }
+  }, [id]);
 
   return (
     <div className="">
@@ -51,7 +74,7 @@ const MovieDetailsPage = () => {
               }}
               className="absolute backdrop-blur-sm top-0 left-0 w-full h-full bg-gray-900 bg-opacity-50"
             ></div>
-            <div className="relative pt-28 lg:pt-44 px-[10%] min-h-[450px] lg:min-h-[700px]">
+            <div className="relative pt-28 lg:pt-44 px-[10%] min-h-[450px] lg:min-h-[700px]  container mx-auto">
               <div className="flex gap-12 items-start">
                 <img
                   className="object-contain w-[320px] lg:w-[380px]"
@@ -89,7 +112,7 @@ const MovieDetailsPage = () => {
               </div>
             </div>
           </div>
-          <main className="container mx-auto">
+          <main className="container mx-auto px-8">
             <section>
               <SectionTitle title={"Screenshots"} />
               <Swiper
@@ -98,30 +121,29 @@ const MovieDetailsPage = () => {
                 onSlideChange={() => console.log("slide change")}
                 onSwiper={(swiper) => console.log(swiper)}
               >
-                {/* {movie?.images?.backdrops.map((item) => (
-              <SwiperSlide>
-                <img src={baseUrl+item?.file_path} alt="" />
-              </SwiperSlide>
-            ))} */}
+                {movie?.images?.backdrops.map((item) => (
+                  <SwiperSlide>
+                    <img src={baseUrl + item?.file_path} alt="" />
+                  </SwiperSlide>
+                ))}
               </Swiper>
             </section>
             <section>
-              <SectionTitle title={`Reviews (${movie?.reviews?.length})`} />
+              <SectionTitle title={`Reviews (${reviews?.length || 0})`} />
               <div className="px-4">
-                {/* {movie?.reviews.map((item) => (
-              <div className='mb-8'>
-                <div className='flex items-center gap-2'>
-                  <div className='w-10 h-10 bg-gray-500 bg-opacity-20 rounded-full flex items-center justify-center'>
-                    {item?.user?.displayName.charAt(0)}
+                {reviews?.map((item) => (
+                  <div className="flex gap-2 mb-8">
+                    <img
+                      className="w-8 h-8 rounded-full"
+                      src="https://static.vecteezy.com/system/resources/previews/005/544/718/non_2x/profile-icon-design-free-vector.jpg"
+                      alt=""
+                    />
+                    <div>
+                      <h2 className="font-semibold">{item.user.name}</h2>
+                      <p className="text-sm">{item.text}</p>
+                    </div>
                   </div>
-                  <div className=''>
-                    <p>{item?.user?.displayName}</p>
-                    <p className='text-xs text-gray-500'>{item?.updatedAt.split('T')[0]}</p>
-                  </div>
-                </div>
-                <div className='ml-12 text-xl'>{item?.content}</div>
-              </div>
-            ))} */}
+                ))}
               </div>
             </section>
             <section>

@@ -13,7 +13,7 @@ exports.signup = async (req, res) => {
         { userId: createdUser._id },
         process.env.JWT_SECRET
       );
-      res.status(200).json({ token, userDetails: { name, email } });
+      res.status(200).json({ token, userDetails: user });
     }
   } catch (error) {
     console.error("Error signing up:", error);
@@ -44,9 +44,7 @@ exports.validateToken = async (req, res) => {
   try {
     const user = req.user;
     if (user) {
-      res
-        .status(200)
-        .json({ userDetails: { name: user.name, email: user.email } });
+      res.status(200).json({ userDetails: user });
     } else {
       res.status(409).json({ message: "Token Not validated" });
     }

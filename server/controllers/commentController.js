@@ -21,8 +21,11 @@ exports.getComments = async (req, res) => {
 exports.getCommentsMovie = async (req, res) => {
   try {
     const { itemId } = req.params;
+    console.log(itemId);
 
-    const comments = await Comment.find({ itemId, itemType: "movie" });
+    const comments = await Comment.find({ itemId, itemType: "movie" }).populate(
+      "user"
+    );
 
     res.status(200).json({
       status: "success",
@@ -31,7 +34,7 @@ exports.getCommentsMovie = async (req, res) => {
   } catch (err) {
     res.status(500).json({
       status: "fail",
-      message: err.message || "Cannot get Comments",
+      message: err.message,
     });
   }
 };
@@ -61,8 +64,10 @@ exports.createComment = async (req, res) => {
   try {
     const { user, text, itemId, itemType } = req.body;
 
-    if (itemType !== "movie" || itemType !== "series") {
-      res.status(400).json({
+    if (itemType !== "movie" && itemType !== "series") {
+      console.log(itemType);
+      console.log("entered");
+      return res.status(400).json({
         status: "fail",
         message: "itemType must be valid",
       });
