@@ -78,7 +78,6 @@ const authSlice = createSlice({
           "Logging In failed",
           action.payload ? action.payload : "Unknown error"
         );
-        localStorage.removeItem("token");
       });
   },
 });
