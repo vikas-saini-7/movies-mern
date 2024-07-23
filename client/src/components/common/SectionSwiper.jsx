@@ -34,7 +34,7 @@ const SectionSwiper = ({ data, usedFor }) => {
           {item.poster_path && (
             <SwiperSlide className="relative group" key={item.id}>
               <div
-                className="h-[400px] lg:h-[480px] bg-cover"
+                className="h-[300px] md:h-[400px] lg:h-[480px] bg-cover"
                 style={{
                   backgroundImage: `url(${baseUrl}${item?.poster_path})`,
                   backgroundOrigin: "center",
