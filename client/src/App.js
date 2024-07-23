@@ -10,7 +10,9 @@ function App() {
 
   useEffect(()=> {
     let token = localStorage.getItem('token');
-    dispatch(loginUserWithToken(token))
+    if(token){
+      dispatch(loginUserWithToken(token))
+    }
   }, [])
 
   const switchWeb = 1; //either 0 or any

@@ -11,7 +11,8 @@ import PhoneMenu from './PhoneMenu'
 
 const Header = () => {
     const [isOpen, setIsOpen] = React.useState(false)
-    const loading = useSelector(state => state.auth.loading)
+    const loadingAuth = useSelector(state => state.auth.loading)
+    const loadingMovies = useSelector(state => state.auth.loading)
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
     const [scrolled, setScrolled] = useState(false);
   
@@ -48,10 +49,10 @@ const Header = () => {
               <PhoneMenu/>
             </Drawer>
             <h1 className='font-black text-primary text-3xl'>DarkFlix</h1>
-            <ul className='items-center gap-4 text-md font-semibold uppercase hidden md:flex'>
-                <NavLink to='/'>
+            <ul className='items-center gap-4 ml-2 text-md font-semibold uppercase hidden md:flex'>
+                {/* <NavLink to='/'>
                     <li className='active'>Home</li>
-                </NavLink>
+                </NavLink> */}
                 <NavLink to='movies'>
                     <li>Movies</li>
                 </NavLink>
@@ -75,7 +76,7 @@ const Header = () => {
               }
           </ul>
         </nav>
-        {loading &&
+        {(loadingMovies || loadingAuth) &&
         <div className='absolute bottom-0 left-0 bg-red-600 bg-opacity-10 -mb-1 w-full h-1 universalLoader'>
           <span></span>
         </div>

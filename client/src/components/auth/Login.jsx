@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { Dialog } from '@headlessui/react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { UserLogin } from '../../redux/actions/authActions'
 import toast from 'react-hot-toast'
 
 const Login = ({closeModal, toggleLoginActive}) => {
     const dispatch = useDispatch()
+    const error = useSelector((store) => store.auth.error)
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -15,15 +16,10 @@ const Login = ({closeModal, toggleLoginActive}) => {
             alert('fill all fields')
         } else {
             dispatch(UserLogin({email, password}))
-            .then(() => {
-              // Show success toast
-              toast.success('Login successful!');
-            })
-            .catch((error) => {
-              // Show error toast
-              toast.error(`Error: ${error.message}`);
-            });
-            closeModal()
+            // closeModal()
+            if(error){
+                alert(error)
+            }
         }
     }
 

@@ -16,14 +16,6 @@ const SignUp = ({closeModal, toggleLoginActive}) => {
             alert('fill all fields')
         } else {
             dispatch(UserSignup({name, email, password}))
-            .then(() => {
-              // Show success toast
-              toast.success('Signup successful!');
-            })
-            .catch((error) => {
-              // Show error toast
-              toast.error(`Error: ${error.message}`);
-            });
             closeModal()
         }
     }

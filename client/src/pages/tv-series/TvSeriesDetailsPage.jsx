@@ -5,25 +5,24 @@ import SectionTitle from "../../components/common/SectionTitle";
 import SectionSwiper from "../../components/common/SectionSwiper";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 
 const baseUrl = "https://image.tmdb.org/t/p/original";
 
-const MovieDetailsPage = () => {
+const TvSeriesDetailsPage = () => {
   const { id } = useParams();
-  const [movie, setMovie] = useState();
-  const [reviews, setReviews] = useState();
+  const [series, setSeries] = useState();
   const [loading, setLoading] = useState(true);
+  const [reviews, setReviews] = useState();
 
-  const fetchMovie = async () => {
+  const fetchSeries = async () => {
     try {
       const API_KEY = "03b6ee421e966831a5e3d3ff0d65eede";
       const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`
+        `https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&language=en-US`
       );
       console.log(response.data);
-      setMovie(response.data);
+      setSeries(response.data);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -50,12 +49,11 @@ const MovieDetailsPage = () => {
   };
 
   useEffect(() => {
-    fetchMovie();
+    fetchSeries();
     if (id) {
       fetchReviews();
     }
   }, [id]);
-
   return (
     <div className="">
       {loading ? (
@@ -65,7 +63,7 @@ const MovieDetailsPage = () => {
           <div
             className="relative bg-cover pt-0"
             style={{
-              backgroundImage: `url(${baseUrl}${movie?.backdrop_path})`,
+              backgroundImage: `url(${baseUrl}${series?.backdrop_path})`,
             }}
           >
             <div
@@ -79,17 +77,17 @@ const MovieDetailsPage = () => {
               <div className="flex flex-col md:flex-row gap-12 items-start">
                 <img
                   className="object-contain w-full md:w-[320px] lg:w-[380px]"
-                  src={baseUrl + movie?.poster_path}
+                  src={baseUrl + series?.poster_path}
                   alt=""
                 />
                 <div className="flex flex-col gap-8 max-w-[900px]">
                   <h1 className="text-5xl lg:text-7xl font-bold">
-                    {movie?.title}
+                    {series?.title}
                   </h1>
                   <div className="flex items-center w-[70px]">
                     <CircularProgressbar
-                      value={movie?.vote_average.toFixed(1) * 10}
-                      text={`${movie?.vote_average.toFixed(1)}`}
+                      value={series?.vote_average.toFixed(1) * 10}
+                      text={`${series?.vote_average.toFixed(1)}`}
                       styles={buildStyles({
                         strokeLinecap: "butt",
                         textSize: "22px",
@@ -101,13 +99,13 @@ const MovieDetailsPage = () => {
                     />
                   </div>
                   <div className="flex flex-wrap gap-4">
-                    {movie?.genres?.slice(0, 3).map((item) => (
+                    {series?.genres?.slice(0, 3).map((item) => (
                       <p className=" px-6 py-2 bg-primary rounded-full backdrop-blur-md">
                         {item?.name}
                       </p>
                     ))}
                   </div>
-                  <p className="text-lg mb-8">{movie?.overview}</p>
+                  <p className="text-lg mb-8">{series?.overview}</p>
 
                   {/* <div className="flex items-center gap-4">
                     <button className="button button-large w-fit flex items-center gap-2">
@@ -124,7 +122,7 @@ const MovieDetailsPage = () => {
             </div>
           </div>
           <main className="container mx-auto px-8">
-            {movie?.images && (
+            {series?.images && (
               <>
                 <section>
                   <SectionTitle title={"Screenshots"} />
@@ -134,7 +132,7 @@ const MovieDetailsPage = () => {
                     onSlideChange={() => console.log("slide change")}
                     onSwiper={(swiper) => console.log(swiper)}
                   >
-                    {movie?.images?.backdrops.map((item) => (
+                    {series?.images?.backdrops.map((item) => (
                       <SwiperSlide>
                         <img src={baseUrl + item?.file_path} alt="" />
                       </SwiperSlide>
@@ -161,10 +159,10 @@ const MovieDetailsPage = () => {
                 ))}
               </div>
             </section>
-            {movie?.recommend && (
+            {series?.recommend && (
               <section>
                 <SectionTitle title={"You may also like"} />
-                <SectionSwiper data={movie?.recommend || []} />
+                <SectionSwiper data={series?.recommend || []} />
               </section>
             )}
           </main>
@@ -174,4 +172,4 @@ const MovieDetailsPage = () => {
   );
 };
 
-export default MovieDetailsPage;
+export default TvSeriesDetailsPage;
