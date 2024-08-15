@@ -1,10 +1,11 @@
 import { IconUser } from "@tabler/icons-react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const baseUrl = "https://image.tmdb.org/t/p/original";
 
-const ReviewCard = ({ data }) => {
+const ReviewCard = ({ data, fetchMovieReviews }) => {
   const { itemId, itemType, text, user } = data;
   const [item, setItem] = useState([]);
 
@@ -28,6 +29,24 @@ const ReviewCard = ({ data }) => {
       // setLoading(false);
     }
   };
+
+  const handleDeleteComment = async () => {
+    try {
+      console.log("some", data._id);
+      const response = await axios.delete(
+        `http://localhost:9000/api/comment/${data._id}`
+      );
+      if (response.status === 200) {
+        console.log("Comment deleted successfully");
+        toast.success("Comment deleted successfully");
+        fetchMovieReviews();
+      }
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+      toast.error("Error deleting comment");
+    }
+  };
+
   useEffect(() => {
     if (itemId) {
       fetchItem();
@@ -47,6 +66,9 @@ const ReviewCard = ({ data }) => {
         </div>
         <p className="font-semibold">{item?.title || item?.name}</p>
         <p className="">" {text}</p>
+        <button onClick={handleDeleteComment} className="text-sm text-red-500">
+          Delete
+        </button>
       </div>
     </div>
   );

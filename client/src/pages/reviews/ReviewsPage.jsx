@@ -36,7 +36,7 @@ const ReviewsPage = () => {
     <div className="container mx-auto px-4 pt-20 min-h-[500px] max-w-[900px]">
       {/* <h1 className="text-xl font-semibold mt-4">Your Reviews</h1> */}
       {movieReviews.map((item) => (
-        <ReviewCard data={item} />
+        <ReviewCard fetchMovieReviews={fetchMovieReviews} data={item} />
       ))}
     </div>
   );

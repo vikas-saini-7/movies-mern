@@ -4,7 +4,7 @@ exports.getComments = async (req, res) => {
   try {
     const { userId } = req.params;
 
-    const comments = await Comment.find({ user: userId }).populate('user');
+    const comments = await Comment.find({ user: userId }).populate("user");
 
     res.status(200).json({
       status: "success",
@@ -79,6 +79,31 @@ exports.createComment = async (req, res) => {
     res.status(200).json({
       status: "success",
       results: savedComment,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "fail",
+      message: error.message,
+    });
+  }
+};
+
+exports.deleteComment = async (req, res) => {
+  try {
+    const { commentId } = req.params;
+
+    const comment = await Comment.findByIdAndDelete(commentId);
+
+    if (!comment) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Comment not found",
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      results: null,
     });
   } catch (error) {
     res.status(500).json({

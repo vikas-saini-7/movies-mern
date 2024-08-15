@@ -6,14 +6,26 @@ import SectionSwiper from "../../components/common/SectionSwiper";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
 
 const baseUrl = "https://image.tmdb.org/t/p/original";
 
 const TvSeriesDetailsPage = () => {
+  const user = useSelector((state) => state.auth.user._id);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   const { id } = useParams();
   const [series, setSeries] = useState();
   const [loading, setLoading] = useState(true);
+  const [addCommentText, setAddCommentText] = useState();
   const [reviews, setReviews] = useState();
+
+  // add review
+  const [showCommentBox, setShowCommentBox] = useState(false);
+  const handleAddReviewClick = () => {
+    setShowCommentBox(!showCommentBox);
+  };
 
   const fetchSeries = async () => {
     try {
@@ -42,9 +54,32 @@ const TvSeriesDetailsPage = () => {
       console.log("Comments: ", response.data.results);
       setReviews(response.data.results);
       // setLoading(false);
+      setAddCommentText("");
+      setShowCommentBox(false);
     } catch (error) {
       console.error("Error fetching data:", error);
       // setLoading(false);
+    }
+  };
+
+  const postComment = async () => {
+    try {
+      if (!addCommentText) {
+        toast.error("Comment cannot be empty");
+        return;
+      }
+      const response = await axios.post(`http://localhost:9000/api/comment`, {
+        user: user,
+        text: addCommentText,
+        itemType: "movie",
+        itemId: id,
+      });
+      console.log("Post Comment: ", response.data.results);
+      fetchReviews();
+      toast.success("Comment added successfully");
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      toast.error("Error posting comment");
     }
   };
 
@@ -142,7 +177,7 @@ const TvSeriesDetailsPage = () => {
               </>
             )}
             <section>
-              <SectionTitle title={`Reviews (${reviews?.length || 0})`} />
+              <SectionTitle title={`Comments (${reviews?.length || 0})`} />
               <div className="px-4">
                 {reviews?.map((item) => (
                   <div className="flex gap-2 mb-8">
@@ -159,6 +194,34 @@ const TvSeriesDetailsPage = () => {
                 ))}
               </div>
             </section>
+            {/* Add review */}
+            {isAuthenticated && (
+              <>
+                {!showCommentBox && (
+                  <button
+                    onClick={handleAddReviewClick}
+                    className="btn btn-primary"
+                  >
+                    Add Comment
+                  </button>
+                )}
+                {showCommentBox && (
+                  <div className="mt-4 text-black">
+                    <textarea
+                      className="w-full p-2 border rounded"
+                      placeholder="Write your review here..."
+                      onChange={(e) => setAddCommentText(e.target.value)}
+                    ></textarea>
+                    <button
+                      onClick={postComment}
+                      className="btn btn-secondary mt-2"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
             {series?.recommend && (
               <section>
                 <SectionTitle title={"You may also like"} />
