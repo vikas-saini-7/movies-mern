@@ -34,7 +34,7 @@ const ReviewCard = ({ data, fetchMovieReviews }) => {
     try {
       console.log("some", data._id);
       const response = await axios.delete(
-        `http://localhost:9000/api/comment/${data._id}`
+        `https://darkflix-backend.onrender.com/api/comment/${data._id}`
       );
       if (response.status === 200) {
         console.log("Comment deleted successfully");
