@@ -49,7 +49,7 @@ const MovieDetailsPage = () => {
     }
     try {
       const response = await axios.get(
-        `http://localhost:9000/api/comment/movie/${id}`
+        `https://darkflix-backend.onrender.com/api/comment/movie/${id}`
       );
       console.log("Comments: ", response.data.results);
       setReviews(response.data.results);
@@ -66,12 +66,15 @@ const MovieDetailsPage = () => {
         toast.error("Comment cannot be empty");
         return;
       }
-      const response = await axios.post(`http://localhost:9000/api/comment`, {
-        user: user,
-        text: addCommentText,
-        itemType: "movie",
-        itemId: id,
-      });
+      const response = await axios.post(
+        `https://darkflix-backend.onrender.com/api/comment`,
+        {
+          user: user,
+          text: addCommentText,
+          itemType: "movie",
+          itemId: id,
+        }
+      );
       console.log("Post Comment: ", response.data.results);
       fetchReviews();
       toast.success("Comment added successfully");

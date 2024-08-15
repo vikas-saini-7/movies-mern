@@ -49,7 +49,7 @@ const TvSeriesDetailsPage = () => {
     }
     try {
       const response = await axios.get(
-        `http://localhost:9000/api/comment/movie/${id}`
+        `https://darkflix-backend.onrender.com/api/comment/movie/${id}`
       );
       console.log("Comments: ", response.data.results);
       setReviews(response.data.results);
@@ -68,7 +68,7 @@ const TvSeriesDetailsPage = () => {
         toast.error("Comment cannot be empty");
         return;
       }
-      const response = await axios.post(`http://localhost:9000/api/comment`, {
+      const response = await axios.post(`https://darkflix-backend.onrender.com/api/comment`, {
         user: user,
         text: addCommentText,
         itemType: "movie",

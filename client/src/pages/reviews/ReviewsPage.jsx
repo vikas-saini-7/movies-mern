@@ -16,7 +16,7 @@ const ReviewsPage = () => {
     }
     try {
       const response = await axios.get(
-        `http://localhost:9000/api/comment/${userId}`
+        `https://darkflix-backend.onrender.com/api/comment/${userId}`
       );
       console.log("Comments: ", response.data.results);
       setMovieReviews(response.data.results);
