@@ -7,14 +7,25 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import toast from "react-hot-toast";
 
 const baseUrl = "https://image.tmdb.org/t/p/original";
 
 const MovieDetailsPage = () => {
+  const user = useSelector((state) => state.auth.user._id);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   const { id } = useParams();
   const [movie, setMovie] = useState();
   const [reviews, setReviews] = useState();
+  const [addCommentText, setAddCommentText] = useState();
   const [loading, setLoading] = useState(true);
+
+  // add review
+  const [showCommentBox, setShowCommentBox] = useState(false);
+  const handleAddReviewClick = () => {
+    setShowCommentBox(!showCommentBox);
+  };
 
   const fetchMovie = async () => {
     try {
@@ -46,6 +57,27 @@ const MovieDetailsPage = () => {
     } catch (error) {
       console.error("Error fetching data:", error);
       // setLoading(false);
+    }
+  };
+
+  const postComment = async () => {
+    try {
+      if (!addCommentText) {
+        toast.error("Comment cannot be empty");
+        return;
+      }
+      const response = await axios.post(`http://localhost:9000/api/comment`, {
+        user: user,
+        text: addCommentText,
+        itemType: "movie",
+        itemId: id,
+      });
+      console.log("Post Comment: ", response.data.results);
+      fetchReviews();
+      toast.success("Comment added successfully");
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      toast.error("Error posting comment");
     }
   };
 
@@ -108,17 +140,6 @@ const MovieDetailsPage = () => {
                     ))}
                   </div>
                   <p className="text-lg mb-8">{movie?.overview}</p>
-
-                  {/* <div className="flex items-center gap-4">
-                    <button className="button button-large w-fit flex items-center gap-2">
-                      {" "}
-                      <IconPlayerPlay /> Watch Now
-                    </button>
-                    <button className="button button-large w-fit flex items-center gap-2">
-                      {" "}
-                      <IconPlayerPlay /> Watch Trailer
-                    </button>
-                  </div> */}
                 </div>
               </div>
             </div>
@@ -144,7 +165,7 @@ const MovieDetailsPage = () => {
               </>
             )}
             <section>
-              <SectionTitle title={`Reviews (${reviews?.length || 0})`} />
+              <SectionTitle title={`Comments (${reviews?.length || 0})`} />
               <div className="px-4">
                 {reviews?.map((item) => (
                   <div className="flex gap-2 mb-8">
@@ -161,6 +182,34 @@ const MovieDetailsPage = () => {
                 ))}
               </div>
             </section>
+            {/* Add review */}
+            {isAuthenticated && (
+              <>
+                {!showCommentBox && (
+                  <button
+                    onClick={handleAddReviewClick}
+                    className="btn btn-primary"
+                  >
+                    Add Comment
+                  </button>
+                )}
+                {showCommentBox && (
+                  <div className="mt-4 text-black">
+                    <textarea
+                      className="w-full p-2 border rounded"
+                      placeholder="Write your review here..."
+                      onChange={(e) => setAddCommentText(e.target.value)}
+                    ></textarea>
+                    <button
+                      onClick={postComment}
+                      className="btn btn-secondary mt-2"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
             {movie?.recommend && (
               <section>
                 <SectionTitle title={"You may also like"} />
